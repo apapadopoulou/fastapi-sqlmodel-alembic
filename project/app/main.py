@@ -1,15 +1,13 @@
 from fastapi import Depends, FastAPI
-from models.audio_converter import AudioConverter
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 import os
 
 from app.db import get_session, init_db
-from app.models import Song, SongCreate
-from downloader.fetch_song_details import fetch_video
-from downloader.download_video import download, download_audio
 
 from models.youtube_downloader import YouTubeDownloader
+from models.audio_converter import AudioConverter
+
 app = FastAPI()
 
 
