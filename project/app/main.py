@@ -1,11 +1,15 @@
 from fastapi import Depends, FastAPI
+from models.audio_converter import AudioConverter
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
+import os
 
 from app.db import get_session, init_db
 from app.models import Song, SongCreate
 from downloader.fetch_song_details import fetch_video
+from downloader.download_video import download, download_audio
 
+from models.youtube_downloader import YouTubeDownloader
 app = FastAPI()
 
 
@@ -17,6 +21,22 @@ async def pong():
 @app.get("/video")
 async def fetch_video_detals(url: str = None):
     if url is None:
-        return "what?"
-    video = fetch_video(url)
-    return video
+        return "Sorry, you have to provide a url parameter! :("
+
+    # The API key is already stored as an environment variable.
+    api_key = os.environ.get('YOUTUBE_API_KEY')
+
+    # Initialize downloader and fetch song details
+    # by using a video object.
+    downloader = YouTubeDownloader(api_key, url)
+    video = downloader.fetch_details()
+
+    # Download video.
+    downloader.download_video('./files/', f'{video.title}.mp4')
+
+    # Convert downloaded video to audio.
+    converter = AudioConverter()
+    converter.convert_to_audio(f'./files/{video.title}.mp4', f'./files/{video.title}.mp3')
+
+    # Return video details.
+    return video.get_video_details()
