@@ -9,4 +9,4 @@ class Video:
         self.views = views
 
     def get_video_details(self):
-        return self.title + ", " + self.url + ", " + self.publication_date  + ", " + self.views
+        return f'{self.id}, {self.title}, {self.url}, {self.publication_date}, {self.views}'

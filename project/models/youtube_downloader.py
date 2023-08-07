@@ -21,7 +21,7 @@ class YouTubeDownloader:
         params = parse_qs(urlparse(self.url).query)
 
         # The 'v' parameter is the one that specifies the video id.
-        video_id = params['v']
+        video_id = params['v'][0]
         response = youtube.videos().list(part=['snippet', 'statistics'], id=video_id).execute()
 
         # Instead of the complete response,
@@ -30,7 +30,7 @@ class YouTubeDownloader:
         title = response['items'][0]['snippet']['title']
         publication_date = response['items'][0]['snippet']['publishedAt']
         views = response['items'][0]['statistics']['viewCount']
-
+        
         return Video(video_id, self.url, title, publication_date, views)
     
 

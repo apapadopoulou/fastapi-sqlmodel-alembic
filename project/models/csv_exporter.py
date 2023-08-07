@@ -10,4 +10,6 @@ class CSVExporter:
 
         with open(self.write_path, mode='w', encoding='utf-8') as file:
             writer = csv.writer(file)
+            
+            writer.writerow(['id', 'title', 'url', 'publication_date', 'views', 'apple_music_url', 'spotify_url'])
             writer.writerow(columns)
