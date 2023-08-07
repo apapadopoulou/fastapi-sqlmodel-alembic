@@ -7,6 +7,7 @@ from app.db import get_session, init_db
 
 from models.youtube_downloader import YouTubeDownloader
 from models.audio_converter import AudioConverter
+from models.song_identifier import SongIdentifier
 
 app = FastAPI()
 
@@ -36,5 +37,9 @@ async def fetch_video_detals(url: str = None):
     converter = AudioConverter()
     converter.convert_to_audio(f'./files/{video.title}.mp4', f'./files/{video.title}.mp3')
 
+    # Recognize song.
+    identifier = SongIdentifier(f'./files/{video.title}.mp3')
+    song = await identifier.get_song()
+
     # Return video details.
-    return video.get_video_details()
+    return video.get_video_details() + ", " + song.get_song_details()
