@@ -8,5 +8,6 @@ class Video:
         self.publication_date = publication_date
         self.views = views
 
+    # Return a string with video attributes.
     def get_video_details(self):
         return f'{self.id}, {self.title}, {self.url}, {self.publication_date}, {self.views}'

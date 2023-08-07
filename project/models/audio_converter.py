@@ -2,6 +2,7 @@ from pydub import AudioSegment
 
 class AudioConverter:
 
+    # Converts the provided video file into audio.
     def convert_to_audio(self, vid_path, aud_path):
         try:
             audio = AudioSegment.from_file(vid_path)
