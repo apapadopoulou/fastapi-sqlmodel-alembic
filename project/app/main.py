@@ -8,6 +8,7 @@ from app.db import get_session, init_db
 from models.youtube_downloader import YouTubeDownloader
 from models.audio_converter import AudioConverter
 from models.song_identifier import SongIdentifier
+from models.csv_exporter import CSVExporter
 
 app = FastAPI()
 
@@ -40,6 +41,10 @@ async def fetch_video_detals(url: str = None):
     # Recognize song.
     identifier = SongIdentifier(f'./files/{video.title}.mp3')
     song = await identifier.get_song()
+
+    # Export song data to csv.
+    exporter = CSVExporter(f'./files/{video.title}.csv')
+    exporter.export_data(video.get_video_details() + ", " + song.get_song_details())
 
     # Return video details.
     return video.get_video_details() + ", " + song.get_song_details()
