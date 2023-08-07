@@ -51,3 +51,9 @@ These details are also displayed when fetching the video details.
 
 The video and audio metadata are exported into a csv file. The file is also stored in the
 automatically created `files` folder in the `project` directory.
+
+## Example
+
+By requesting [http://localhost:8004/video?url=https://www.youtube.com/watch?v=EWeIWVGPibc](http://localhost:8004/video?url=https://www.youtube.com/watch?v=EWeIWVGPibc)
+we view data related to the YouTube video of the song *Starry Night* and the track presence on other media platforms.
+Furthermore, the files `Starry Night.mp4`, `Starry Night.mp3` and `Starry Night.csv` are created in the `project/files` directory.
